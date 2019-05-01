@@ -1,17 +1,17 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using Moq;
 using StackExchange.Redis;
 using System.Reflection;
+using NUnit.Framework;
 
 namespace Interception.Caching.Tests
 {
-    [TestClass()]
+    [TestFixture()]
     public class RedisCacheManagerTests
     {
         private Mock<IDatabase> database;
 
-        [TestInitialize]
+        [SetUp]
         public void setup()
         {
             //Set the connection to be mocked
@@ -25,7 +25,7 @@ namespace Interception.Caching.Tests
             field.SetValue(null, new Lazy<IConnectionMultiplexer>(() => multiplexer.Object));
         }
 
-        [TestMethod()]
+        [Test()]
         public void getConnectionTest()
         {
             //Let's mock the Db to give us a specific value so we can guarantee we got the right thing
@@ -41,7 +41,7 @@ namespace Interception.Caching.Tests
 
         }
 
-        [TestMethod()]
+        [Test()]
         public void getStringValueTest()
         {
             //Let's mock the Db to give us a specific value so we can guarantee we got the right thing
@@ -55,7 +55,7 @@ namespace Interception.Caching.Tests
             Assert.AreEqual("FakeString", RedisCacheManager.getStringValue("Item1"));
         }
 
-        [TestMethod()]
+        [Test()]
         public void setStringValueTest()
         {
             //Let's mock the Db to give us a specific value first
